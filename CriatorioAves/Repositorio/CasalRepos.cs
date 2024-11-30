@@ -9,9 +9,9 @@ namespace CriatorioAves.Repositorio
 {
     public class CasalRepos : ICasalRepos
     {
-        public bool AlterarRegistroCasal(Casal casal)
+        public Boolean AlterarRegistroCasal(Casal casal)
         {
-            Banco bdCasal;
+            Banco bdCasal = new Banco();
             String dtSepara;
             Acasalamento acasalamento = new Acasalamento();
             IAcasalamentoRepos repAcasala = new AcasalamentoRepos();
@@ -34,18 +34,24 @@ namespace CriatorioAves.Repositorio
                          " where IdCasal = " + casal.IdCasal;
             try
             {
-                bdCasal = new Banco();
+                
+                bdCasal.IniciaTransacao();
                 bdCasal.ExecutarComandoSQL(sqlUpdate);
                 // registro de acasalamento
                 acasalamento.IdCasal = casal.IdCasal;
                 acasalamento.DataJuncao = casal.DataJuncao;
                 acasalamento.DataSepara = casal.DataSeparacao;
                 acasalamento.IdGaiola = casal.IdGaiola;
-                repAcasala.AlterarRegistroAcasalamento(acasalamento);
+                if (repAcasala.AlterarRegistroAcasalamento(acasalamento))
+                    bdCasal.CommitaTransacao();
+                else
+                    bdCasal.RollBackTransacao();
             }
             catch (Exception e)
             {
+
                 MessageBox.Show(e.Message);
+                bdCasal.RollBackTransacao();
                 return false;
             }
             return true;
@@ -80,22 +86,27 @@ namespace CriatorioAves.Repositorio
 
         public Boolean ExcluirRegistroCasal(int idCasal)
         {
-            Banco bdCasal;
+            Banco bdCasal = new Banco();
             IAcasalamentoRepos repAcasala = new AcasalamentoRepos(); 
             String sqlDelete = "delete from  criatorio.casal " +
                                "where idcasal = " + idCasal;
 
             try
             {
+                bdCasal.IniciaTransacao();
                 // exclui registros de acasalamentos
                 if (!repAcasala.ExcluirRegistrosAcasalamentos(idCasal))
+                {
+                    bdCasal.RollBackTransacao();
                     return false;
-                bdCasal = new Banco();
+                }
                 bdCasal.ExecutarComandoSQL(sqlDelete);
+                bdCasal.CommitaTransacao();
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                bdCasal.RollBackTransacao();
                 return false;
             }
             return true;
@@ -103,7 +114,7 @@ namespace CriatorioAves.Repositorio
 
         public bool IncluirRegistroCasal(Casal casal)
         {
-            Banco bdCasal;
+            Banco bdCasal = new Banco();
             String dtSepara;
             Int32 idCasal;
             Acasalamento acasalamento = new Acasalamento();
@@ -124,10 +135,10 @@ namespace CriatorioAves.Repositorio
             sqlInsert  += casal.IdGaiola + ")";
             try
             {
+                bdCasal.IniciaTransacao();
                 idCasal = CasalExiste(casal.IdAveMacho, casal.IdAveFemea);
                 if (idCasal == 0)
                 {
-                    bdCasal = new Banco();
                     bdCasal.ExecutarComandoSQL(sqlInsert);
                     idCasal = ObterIdCasal();
                 }
@@ -136,11 +147,18 @@ namespace CriatorioAves.Repositorio
                 acasalamento.DataJuncao = casal.DataJuncao;
                 acasalamento.DataSepara = casal.DataSeparacao;
                 acasalamento.IdGaiola = casal.IdGaiola;
-                repAcasala.IncluirRegistroAcasalamento(acasalamento);
+                if (repAcasala.IncluirRegistroAcasalamento(acasalamento))
+                    bdCasal.CommitaTransacao();
+                else
+                {
+                    bdCasal.RollBackTransacao();
+                    return false;
+                }
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                bdCasal.RollBackTransacao();
                 return false;
             }
             return true;

@@ -23,7 +23,7 @@ namespace CriatorioAves.Repositorio
             else
                 dtSepara = acasalamento.DataSepara.ToString("yyyy-MM-dd");
 
-            String sqlUpdate = "update criatorio.acasalamento ";
+            String sqlUpdate = "update criatorio.acasalamento set ";
             if (dtSepara == "null")
                 sqlUpdate += "DataSepara = null " + ", ";
             else
