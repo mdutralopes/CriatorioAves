@@ -8,7 +8,7 @@ namespace CriatorioAves.Repositorio
 {
     public class PosturaFilhoteRepos : IPosturaFilhotesRepos
     {
-        public bool ExcluirRegistrosPosturaFilhote(int idPostura)
+        public Boolean ExcluirRegistrosPosturaFilhote(Int32 idPostura)
         {
             Banco bdPostura;
             String sqlDelete = "delete from  criatorio.posturafilhote " +
@@ -27,7 +27,7 @@ namespace CriatorioAves.Repositorio
             return true;
         }
 
-        public bool IncluirRegistroPosturaFilhote(PosturaFilhote posturaFilhote)
+        public Boolean IncluirRegistroPosturaFilhote(PosturaFilhote posturaFilhote)
         {
             Banco bdPostura;
             String sqlInsert = "insert into criatorio.posturafilhote(idpostura, idave) " +

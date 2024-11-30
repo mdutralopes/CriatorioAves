@@ -55,7 +55,7 @@ namespace CriatorioAves.Repositorio
             return true;
         }
 
-        public Boolean ExcluirRegistroPostura(int idPostura)
+        public Boolean ExcluirRegistroPostura(Int32 idPostura)
         {
             Banco bdPostura;
             String sqlDelete = "delete from  criatorio.postura " +

@@ -73,7 +73,7 @@ namespace CriatorioAves.Repositorio
                 dtSepara = acasalamento.DataSepara.ToString("yyyy-MM-dd");
 
             String sqlInsert = "insert into criatorio.acasalamento(IdCasal, DataJuncao, DataSepara, IdGaiola) " +
-                               "values(" + acasalamento.IdCasal + ", " + acasalamento.DataJuncao.ToString("yyyy-MM-dd") + "', ";
+                               "values(" + acasalamento.IdCasal + ", '" + acasalamento.DataJuncao.ToString("yyyy-MM-dd") + "', ";
             if (dtSepara == "null")
                 sqlInsert += " null, " + acasalamento.IdGaiola + ")";
             else

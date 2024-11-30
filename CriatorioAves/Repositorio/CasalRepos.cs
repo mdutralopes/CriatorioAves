@@ -112,7 +112,7 @@ namespace CriatorioAves.Repositorio
             return true;
         }
 
-        public bool IncluirRegistroCasal(Casal casal)
+        public Boolean IncluirRegistroCasal(Casal casal)
         {
             Banco bdCasal = new Banco();
             String dtSepara;

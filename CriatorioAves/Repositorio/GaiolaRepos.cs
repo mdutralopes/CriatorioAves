@@ -9,7 +9,7 @@ namespace CriatorioAves.Repositorio
 {
     public class GaiolaRepos : IGaiolaRepos
     {
-        public bool AlterarRegistroGaiola(Gaiola gaiola)
+        public Boolean AlterarRegistroGaiola(Gaiola gaiola)
         {
             Banco bdGaiola;
             String sqlUpdate = "update criatorio.gaiola " +
@@ -29,7 +29,7 @@ namespace CriatorioAves.Repositorio
             return true;
         }
 
-        public bool ExcluirRegistroGaiola(long idGaiola)
+        public Boolean ExcluirRegistroGaiola(Int64 idGaiola)
         {
             Banco bdGaiola;
             String sqlDelete = "delete from  criatorio.gaiola " +
@@ -47,7 +47,7 @@ namespace CriatorioAves.Repositorio
             return true;
         }
 
-        public bool IncluirRegistroGaiola(Gaiola gaiola)
+        public Boolean IncluirRegistroGaiola(Gaiola gaiola)
         {
             Banco bdGaiola;
             String sqlInsert = "insert into criatorio.gaiola(NumGaiola, IdModeloGaiola) " +
