@@ -11,5 +11,10 @@ namespace CriatorioAves.Modelo
         public DateTime DataJuncao { get; set; }
         public DateTime DataSeparacao { get; set; }
         public Int32 IdGaiola { get; set; }
+
+        public Casal()
+        {
+            DataSeparacao = new DateTime(1753, 1, 1);
+        }
     }
 }

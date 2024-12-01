@@ -366,14 +366,9 @@ namespace CriatorioAves
 
         private void CriaAssociacaoPosturaFilhote()
         {
-            IPosturaFilhotesRepos posRep = new PosturaFilhoteRepos();
-            PosturaFilhote posturaFilhote = new PosturaFilhote();
             IAveRepos aveRep = new AveRepos();
             Ave ave = new Ave();
-            aveRep.IncluirRegistroAve(ave);
-            posturaFilhote.IdPostura = Convert.ToInt32(txtIdPostura.Text);
-            posturaFilhote.IdAve = ave.IdAve;
-            posRep.IncluirRegistroPosturaFilhote(posturaFilhote);
+            aveRep.IncluirRegistroAve(ave, Convert.ToInt64(txtIdPostura.Text));   
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CriatorioAves.Arguments;
-using CriatorioAves.Interface;
+﻿using CriatorioAves.Interface;
 using CriatorioAves.Modelo;
 using CriatorioAves.Repositorio;
 using System;

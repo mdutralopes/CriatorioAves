@@ -11,6 +11,8 @@ namespace CriatorioAves.Interface
         Boolean AlterarRegistroAve(Ave ave);
         Boolean IncluirRegistroAve(Ave ave);
         Boolean ExcluirRegistroAve(Int32 idAve);
+        Boolean IncluirRegistroAve(Ave ave, Int64 idPostura);
+
         DataTable ListaAves(Char sexo = 'T', Int32 idEspecie = 0, StatusAve? statusAve = null, 
                             Int32 idGaiola = 0, Int32 idCriador = 0, Int32 anoNasc = 0);
         DataTable ListaAvesCombo(Int32 idAve, Int32 idEspecie, Char sexo);

@@ -47,7 +47,7 @@ namespace CriatorioAves.Repositorio
         public Boolean ExcluirRegistrosAcasalamentos(int idCasal)
         {
             Banco bdCasal;
-            String sqlDelete = "delete from  criatorio.casal " +
+            String sqlDelete = "delete from  criatorio.acasalamento " +
                                "where idcasal = " + idCasal;
             try
             {

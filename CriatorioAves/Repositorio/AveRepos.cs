@@ -111,12 +111,12 @@ namespace CriatorioAves.Repositorio
             if (paiAve == "null")
                 sqlInsert += " null, ";
             else
-                sqlInsert +=  paiAve + ", ";
+                sqlInsert += paiAve + ", ";
             if (maeAve == "null")
                 sqlInsert += " null, '";
             else
                 sqlInsert += maeAve + ", '";
-            sqlInsert +=  ave.Observacao + "')";
+            sqlInsert += ave.Observacao + "')";
             try
             {
                 bdAve = new Banco();
@@ -125,6 +125,53 @@ namespace CriatorioAves.Repositorio
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                return false;
+            }
+            return true;
+        }
+
+        public Boolean IncluirRegistroAve(Ave ave, Int64 idPostura)
+        {
+            IPosturaFilhotesRepos posRep = new PosturaFilhoteRepos();
+            PosturaFilhote posturaFilhote = new PosturaFilhote();
+            posturaFilhote.IdPostura = idPostura;
+            posturaFilhote.IdAve = ave.IdAve;
+
+            Banco bdAve = new Banco();
+            String paiAve = ave.IdPaiAve.ToString();
+            if (paiAve == "-1")
+                paiAve = "null";
+            String maeAve = ave.IdMaeAve.ToString();
+            if (maeAve == "-1")
+                maeAve = "null";
+            String sqlInsert = "insert into criatorio.ave(IdentAve, SexoAve, IdEspecie, MutacaoAve, " +
+                               "NomeAve, DtNascAve, StatusAve, IdCriador, DtCompraAve, ValorCompraAve, " +
+                               "IdGaiola, IdPai, IdMae, ObsAve) " +
+                               "values('" + ave.Identificacao + "', '" + ave.Sexo + "', " + ave.IdEspecie + ", '" +
+                               ave.CorMutacao + "', '" + ave.NomeAve + "', '" + ave.DataNascimento.ToString("yyyy-MM-dd") + "', " + (int)ave.Status + ", " +
+                               ave.IdCriador + ", '" + ave.DataCompra.ToString("yyyy-MM-dd") + "', " + ave.Valor + ", " + ave.IdGaiola + ", ";
+            if (paiAve == "null")
+                sqlInsert += " null, ";
+            else
+                sqlInsert += paiAve + ", ";
+            if (maeAve == "null")
+                sqlInsert += " null, '";
+            else
+                sqlInsert += maeAve + ", '";
+            sqlInsert += ave.Observacao + "')";
+            try
+            {
+                bdAve.IniciaTransacao();
+                bdAve.ExecutarComandoSQL(sqlInsert);
+                if (posRep.IncluirRegistroPosturaFilhote(posturaFilhote))
+                    bdAve.CommitaTransacao();
+                else
+                    bdAve.RollBackTransacao();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                bdAve.RollBackTransacao();
                 return false;
             }
             return true;
